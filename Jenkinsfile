@@ -26,7 +26,7 @@ pipeline {
       agent any
       steps {
         sshagent(['ec2-docker']) {
-                  sh 'docker container run --detach -p 8080:80 vinaykumar94/apptest'
+                  sh 'docker container run --detach -p 80:80 vinaykumar94/apptest'
               }
       }
     }
