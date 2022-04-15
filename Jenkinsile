@@ -20,9 +20,8 @@ node {
         }
     stage('Push image') {
         
-        def dockerRun = ‘docker container run --detach -p 80:80 vinaykumar94/apptest:latest’
-        sshagent([‘ec2-docker’]) {
-        sh “ssh -o StrictHostKeyChecking=no ec2-user@172.31.12.28 ${dockerRun}”
-        }
+        sshagent(['ec2-docker']) {
+           docker run -dit -p 80:80 vinaykumar94/apptest:latest
+    }
     }
 }
