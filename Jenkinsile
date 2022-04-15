@@ -9,7 +9,7 @@ node {
 
     stage('Build image') {
   
-       app = docker.build("vinaykumar94/apptest")
+       sh 'docker build -t vinaykumar94/apptest .'
     }
     
     stage('Push image') {
@@ -19,10 +19,8 @@ node {
             app.push("latest")
         }
     stage('deploy') {      
-        docker.withServer('http://172.31.12.28:80', 'ec2-docker') {
-        docker.image('vinaykumar94/apptest:latest').withRun('-p 80:80') {
-
-        }
-      }
+        sshagent(['ec2-docker']) {
+    sh 'docker container run --detach -p 80:80 vinaykumar94/apptest'
+   }
     }
     }
