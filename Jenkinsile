@@ -12,10 +12,16 @@ node {
     }
     
     stage('Push image') {
-        
-        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-            app.push("${env.BUILD_NUMBER}")
-            app.push("latest")
+        withCredentials([usernameColonPassword(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
+           sh “docker login -u ${dockerhub} -p ${dockerhub}”
+          }
+        sh ‘docker push vinaykumar94/apptest:latest’
+
         }
+    stage('deploy') {      
+        sshagent(['ec2-docker']) {
+           sh 'docker container run --detach -p 80:80 vinaykumar94/apptest'
+        }
+    }
 
     }
