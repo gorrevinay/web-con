@@ -18,12 +18,11 @@ node {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
         }
-    stage('deploy') {
-        
-        docker.withServer('tcp://172.31.12.28:80', 'ec2-docker') {
+    stage('deploy') {      
+        docker.withServer('http://172.31.12.28:80', 'ec2-docker') {
         docker.image('vinaykumar94/apptest:latest').withRun('-p 80:80') {
 
         }
       }
-
+    }
     }
