@@ -25,7 +25,9 @@ pipeline {
     stage('Docker Deploy') {
       agent any
       steps {
-        sh 'docker container run --detach -p 80:80 vinaykumar94/apptest'
+        sshagent(['ec2-docker']) {
+                  sh 'docker container run --detach -p 80:80 vinaykumar94/apptest'
+              }
       }
     }
   }
