@@ -26,7 +26,7 @@ pipeline {
       agent any
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'ec2-docker', keyFileVariable: 'keyid', usernameVariable: 'userid')]) {
-                  sh ' ssh -i "keyid" ${env.userid}@172.31.12.28 
+          sh ' ssh -i "${keyid}" ${env.userid}@172.31.12.28 
                   sh 'docker container run --detach -p 80:80 vinaykumar94/apptest'
                 }
               }
