@@ -18,10 +18,14 @@ node {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
         }
-    stage('Push image') {
+    stage('deploy') {
         
-        sshagent(['ec2-docker']) {
-           docker run -dit -p 80:80 vinaykumar94/apptest:latest
+        docker.withServer('tcp://172.31.12.28:80', 'ec2-docker') {
+        docker.image('vinaykumar94/apptest:latest').withRun('-p 80:80') {
+
+        }
+      }
+
     }
-    }
+
 }
