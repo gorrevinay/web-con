@@ -26,7 +26,7 @@ pipeline {
       agent any
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'ec2-docker', keyFileVariable: 'keyid', usernameVariable: 'userid')]) {
-                  sh 'ssh -tt -i -o StrictHostKeyChecking=no $keyid $userid@ec2-3-111-39-4.ap-south-1.compute.amazonaws.com'
+                  sh 'ssh -tt -i -v $keyid $userid@ec2-3-111-39-4.ap-south-1.compute.amazonaws.com'
                   sh 'docker container run --detach -p 80:80 vinaykumar94/apptest'
                 }
               }
