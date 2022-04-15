@@ -1,6 +1,12 @@
 pipeline {
   agent none
   stages {
+      stage('Clone repository') {
+      agent any
+      steps {
+        checkout scm
+      }
+    }    
     stage('Docker Build') {
       agent any
       steps {
