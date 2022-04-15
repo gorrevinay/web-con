@@ -11,5 +11,11 @@ node {
        sh 'docker build -t vinaykumar94/apptest .'
     }
     
+    stage('Push image') {
+        
+        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+            app.push("${env.BUILD_NUMBER}")
+            app.push("latest")
+        }
 
     }
