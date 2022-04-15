@@ -1,0 +1,22 @@
+node {
+    def app
+
+    stage('Clone repository') {
+      
+
+        checkout scm
+    }
+
+    stage('Build image') {
+  
+       app = docker.build("vinaykumar94/apptest")
+    }
+    
+    stage('Push image') {
+        
+        docker.withRegistry('https://registry.hub.docker.com', 'ddd') {
+            app.push("${env.BUILD_NUMBER}")
+            app.push("latest")
+        }
+    }
+}
